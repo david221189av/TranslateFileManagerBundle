@@ -9,7 +9,7 @@
  * file that was distributed with this source code.
  */
 
-namespace TranslateFileManagerBundle\DependencyInjection;
+namespace TranslateFileManager\Bundle\DependencyInjection;
 
 use Symfony\Component\Config\FileLocator;
 use Symfony\Component\DependencyInjection\ContainerBuilder;

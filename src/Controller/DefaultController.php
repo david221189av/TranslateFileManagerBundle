@@ -7,7 +7,7 @@
  * @version   1.0.0
  */
 
-namespace TranslateFileManagerBundle\Controller;
+namespace TranslateFileManager\Bundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;

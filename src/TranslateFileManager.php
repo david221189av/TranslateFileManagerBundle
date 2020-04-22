@@ -7,7 +7,7 @@
  * @version   1.0.0
  */
 
-namespace TranslateFileManagerBundle;
+namespace TranslateFileManager\Bundle;
 
 use Symfony\Component\HttpKernel\Bundle\Bundle;
 
