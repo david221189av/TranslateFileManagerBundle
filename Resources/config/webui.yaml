@@ -1,0 +1,7 @@
+services:
+    TranslateFileManagerBundle\Controller\DefaultController:
+        autowire: true
+        public: true
+        tags: ['controller.service_arguments']
+        arguments:
+            - '%translate_file_manager.webui.enabled%'

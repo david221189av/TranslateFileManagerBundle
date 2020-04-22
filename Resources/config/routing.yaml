@@ -1,0 +1,4 @@
+translate_file_manager_index:
+  path: /trans
+  methods: [GET]
+  defaults:  { _controller: TranslateFileManagerBundle\Controller\DefaultController::indexAction, configName: null }
