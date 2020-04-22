@@ -15,12 +15,12 @@
         "php": "^7.3",
         "symfony/framework-bundle": "^5.0",
         "symfony/serializer": "^5.0",
-        "symfony/console": "^5.0",
+        "symfony/console": "^5.0"
     },
     "require-dev": {},
     "autoload": {
         "psr-4": {
-            "TranslateFileManagerBundle\\src\\": ""
+            "TranslateFileManagerBundle\\": "src\\"
         },
         "exclude-from-classmap": [
             "/Tests/"
