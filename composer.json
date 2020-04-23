@@ -20,7 +20,7 @@
     "require-dev": {},
     "autoload": {
         "psr-4": {
-            "TranslateFileManagerBundle\\": "src\\"
+            "TranslateFileManager\\TranslateFileManagerBundle\\": "src\\"
         },
         "exclude-from-classmap": [
             "/Tests/"

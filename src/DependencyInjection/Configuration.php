@@ -1,74 +1,96 @@
 <?php
 
-namespace TranslateFileManager\Bundle\DependencyInjection;
+/**
+ *
+ * Copyright (c) Vladimír Macháček
+ *
+ * For the full copyright and license information, please view the file license.md
+ * that was distributed with this source code.
+ *
+ */
 
-use Symfony\Component\Config\Definition\Builder\ArrayNodeDefinition;
+declare(strict_types = 1);
+
+namespace TranslateFileManager\TranslateFileManagerBundle\DependencyInjection;
+
 use Symfony\Component\Config\Definition\Builder\TreeBuilder;
 use Symfony\Component\Config\Definition\ConfigurationInterface;
 
-final class Configuration implements ConfigurationInterface
+
+class Configuration implements ConfigurationInterface
 {
-    public function getConfigTreeBuilder(): TreeBuilder
+
+    /**
+     * Generates the configuration tree builder.
+     *
+     * @return \Symfony\Component\Config\Definition\Builder\TreeBuilder The tree builder
+     */
+    public function getConfigTreeBuilder() : TreeBuilder
     {
-        if (\method_exists(TreeBuilder::class, 'getRootNode')) {
-            $treeBuilder = new TreeBuilder('translate_file_manager');
+        $treeBuilder = new TreeBuilder('translatefilemanager');
+        if (method_exists($treeBuilder, 'getRootNode')) {
             $rootNode = $treeBuilder->getRootNode();
+
         } else {
             // BC layer for symfony/config 4.1 and older
-            $treeBuilder = new TreeBuilder();
             $rootNode = $treeBuilder->root('translate_file_manager');
         }
 
         $rootNode
             ->children()
-            ->booleanNode('enable')->defaultTrue()->end()
-            ->booleanNode('async')->defaultFalse()->end()
-            ->booleanNode('auto_inline')->defaultTrue()->end()
-            ->booleanNode('inline')->defaultFalse()->end()
-            ->booleanNode('autoload')->defaultTrue()->end()
-            ->booleanNode('jquery')->defaultFalse()->end()
-            ->booleanNode('require_js')->defaultFalse()->end()
-            ->booleanNode('input_sync')->defaultFalse()->end()
-            ->scalarNode('base_path')->defaultValue('bundles/fosckeditor/')->end()
-            ->scalarNode('js_path')->defaultValue('bundles/fosckeditor/ckeditor.js')->end()
-            ->scalarNode('jquery_path')->defaultValue('bundles/fosckeditor/adapters/jquery.js')->end()
-            ->scalarNode('default_config')->defaultValue(null)->end()
-            ->append($this->createConfigsNode())
+            ->booleanNode('disableCache')->end()
+            ->scalarNode('documentRoot')->end()
+            ->scalarNode('outputDir')->end()
+
+            ->arrayNode('filesCollections')
+            ->arrayPrototype()
+            ->children()
+            ->arrayNode('cssFiles')
+            ->prototype('scalar')->end()
+            ->end()
+            ->arrayNode('cssFilters')
+            ->prototype('scalar')->end()
+            ->end()
+            ->booleanNode('cssLoadContent')
+            ->defaultFalse()
+            ->end()
+            ->arrayNode('cssOutputElementAttributes')
+            ->prototype('scalar')->end()
+            ->end()
+            ->arrayNode('jsFiles')
+            ->prototype('scalar')->end()
+            ->end()
+            ->arrayNode('jsFilters')
+            ->prototype('scalar')->end()
+            ->end()
+            ->booleanNode('jsLoadContent')
+            ->defaultFalse()
+            ->end()
+            ->arrayNode('jsOutputElementAttributes')
+            ->prototype('scalar')->end()
+            ->end()
+            ->end()
+            ->end()
+            ->end()
+
+            ->arrayNode('filesCollectionsContainers')
+            ->arrayPrototype()
+            ->children()
+            ->arrayNode('cssCollections')
+            ->prototype('scalar')->end()
+            ->end()
+            ->arrayNode('jsCollections')
+            ->prototype('scalar')->end()
+            ->end()
+            ->end()
+            ->end()
+            ->end()
+
+            ->arrayNode('pathPlaceholders')->end()
+            ->scalarNode('pathPlaceholderDelimiter')->end()
             ->end();
 
         return $treeBuilder;
     }
 
-    private function createConfigsNode(): ArrayNodeDefinition
-    {
-        return $this->createPrototypeNode('configs')
-            ->arrayPrototype()
-            ->normalizeKeys(false)
-            ->useAttributeAsKey('name')
-            ->variablePrototype()->end()
-            ->end();
-    }
-
-    private function createPrototypeNode(string $name): ArrayNodeDefinition
-    {
-        return $this->createNode($name)
-            ->normalizeKeys(false)
-            ->useAttributeAsKey('name');
-    }
-
-    private function createNode(string $name): ArrayNodeDefinition
-    {
-        if (\method_exists(TreeBuilder::class, 'getRootNode')) {
-            $treeBuilder = new TreeBuilder($name);
-            $node = $treeBuilder->getRootNode();
-        } else {
-            // BC layer for symfony/config 4.1 and older
-            $treeBuilder = new TreeBuilder();
-            $node = $treeBuilder->root($name);
-        }
-
-        \assert($node instanceof ArrayNodeDefinition);
-
-        return $node;
-    }
 }

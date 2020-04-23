@@ -7,10 +7,12 @@
  * @version   1.0.0
  */
 
-namespace TranslateFileManager\Bundle;
+declare(strict_types = 1);
+
+namespace TranslateFileManager\TranslateFileManagerBundle;
 
 use Symfony\Component\HttpKernel\Bundle\Bundle;
 
-class TranslateFileManager extends Bundle {
+class TranslateFileManagerBundle extends Bundle {
 
 }
